@@ -5,11 +5,11 @@ param(
     [string]$Folder,
 
     [Parameter(Mandatory=$true)]
-    [string]$OldSuffix,
+    [string]$oldSuffix,
 
     [Parameter(Mandatory=$true)]
-    [string]$NewSuffix
+    [string]$newSuffix
 )
 
-Get-ChildItem -Path $Folder -Recurse -File -Filter "*$OldSuffix*" |
-    Rename-Item -NewName { $_.Name -replace [Regex]::Escape($OldSuffix), $NewSuffix }
+Get-ChildItem -Path $Folder -Recurse -File -Filter "*$oldSuffix*" |
+    Rename-Item -NewName { $_.Name -replace [Regex]::Escape($oldSuffix), $newSuffix }
