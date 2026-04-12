@@ -1,1 +1,15 @@
-Get-ChildItem -Path "C:\Your\Folder\Here" -Recurse -File -Filter "*отредактировано*" | Rename-Item -NewName { $_.Name -replace 'отредактировано','edited' }
+# Get-ChildItem -Path "C:\Your\Folder\Here" -Recurse -File -Filter "*отредактировано*" | Rename-Item -NewName { $_.Name -replace 'отредактировано','edited' }
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$Folder,
+
+    [Parameter(Mandatory=$true)]
+    [string]$OldSuffix,
+
+    [Parameter(Mandatory=$true)]
+    [string]$NewSuffix
+)
+
+Get-ChildItem -Path $Folder -Recurse -File -Filter "*$OldSuffix*" |
+    Rename-Item -NewName { $_.Name -replace [Regex]::Escape($OldSuffix), $NewSuffix }
