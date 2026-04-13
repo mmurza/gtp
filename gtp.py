@@ -329,7 +329,8 @@ def wizard(): # wizard mode, if user have not given the argument before running
         pass
     
 def parse(description): # start point of the program, where variable "path" is being created
-    suffixes = ["", "-edited"] # text google can add to the name of the file and without making separate json
+#    suffixes = ["", "-edited"] # text google can add to the name of the file and without making separate json
+    suffixes = ["", "-edited", "-redaguota", "-отредактировано"] # text google can add to the name of the file and without making separate json
     # this means that file cat.png and cat-edited.png have only one json - cat.png.supplemental-metadata.json
     
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
@@ -345,6 +346,7 @@ def parse(description): # start point of the program, where variable "path" is b
     else: path = args.path
     
     suffixes = args.suffix
+#    print(suffixes)
     destination = args.destination
     
     main(path, suffixes, destination) # run main function with path, suffixes and destination
