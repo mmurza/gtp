@@ -1,6 +1,6 @@
 import os
 import re
-import json
+import ujson
 from datetime import datetime
 import filedate
 import shutil
