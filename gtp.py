@@ -80,7 +80,7 @@ def unpack_json(path, savelogsto): # get what needed from single json file.
         try:
             # Open the JSON file and load its content
             with open(path, "r", encoding='utf-8') as file:
-                content = json.load(file)
+                content = ujson.load(file)
             # Check for required keys
             if (not content or 
                 "title" not in content or
