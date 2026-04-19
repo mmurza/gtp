@@ -257,7 +257,7 @@ def main(path, suffixes, destination): # main function, where everything is bein
                                       "title": "Title is missing",
                                       "time": time.strftime("%Y-%m-%d %H:%M:%S")})
             # log the scipping of the JSON file
-            log_detail(saveto, f"Skipping JSON file in the main loop: {jsonpath}\n")
+#            log_detail(saveto, f"Skipping JSON file in the main loop: {jsonpath}\n")
             continue # if json is empty, skip it
         
         # look for file pair based on json data
