@@ -36,7 +36,8 @@ def get_unique_path(path, is_dir = False): # get unique path, to directory or fi
             path = f"{path}({n})"
         return path
     
-    if not is_dir:
+#    if not is_dir:
+    else:
         if not os.path.isfile(path):
             return path
         else:
