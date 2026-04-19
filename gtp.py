@@ -75,7 +75,7 @@ def get_file_names(path): # get all files from all folders inside directory give
 
 def unpack_json(path, savelogsto): # get what needed from single json file.
     # Log the processing of the JSON file
-    log_detail(savelogsto, f"Processing JSON file: {path}")
+#    log_detail(savelogsto, f"Processing JSON file: {path}")
     if exists(path):
         try:
             # Open the JSON file and load its content
@@ -90,7 +90,7 @@ def unpack_json(path, savelogsto): # get what needed from single json file.
                 log_detail(savelogsto, f"Invalid JSON structure in file, skipping: {path}")
                 return None
             # Extract the required information
-            log_detail(savelogsto, f"Extracting data from JSON file: {path}")
+#            log_detail(savelogsto, f"Extracting data from JSON file: {path}")
             return {"filepath": path,
                     "title": content["title"],
                     "date": datetime.fromtimestamp(int(content["photoTakenTime"]["timestamp"]))}
@@ -262,20 +262,20 @@ def main(path, suffixes, destination): # main function, where everything is bein
         
         # look for file pair based on json data
         # log the search for the file pairs based on json data
-        log_detail(saveto, f"Searching for file pairs based on \"title\" from JSON: {jsondata['title']}")
+#        log_detail(saveto, f"Searching for file pairs based on \"title\" from JSON: {jsondata['title']}")
         exist, files_ = find_file(jsondata, files, suffixes)
         for file in files_:
             if exist:
                 # copy and modify file, if found
                 # log the copying and modification of the file
-                log_detail(saveto, f"Copying and modifying file: {file['filepath']}")
+#                log_detail(saveto, f"Copying and modifying file: {file['filepath']}")
                 procpath = copy_modify(file, jsondata["date"], checkout_dir(os.path.join(saveto, "Processed")))
                 # save path to modified file
                 file["procpath"] = procpath
                 file["jsonpath"] = jsonpath
                 file["time"] = time.strftime("%Y-%m-%d %H:%M:%S")
                 # log the successful processing of the file
-                log_detail(saveto, f"Successfully processed file: {file['filename']}\n")
+#                log_detail(saveto, f"Successfully processed file: {file['filename']}\n")
                 processed.append(file)
             else:
                 # log the unprocessed JSON file
