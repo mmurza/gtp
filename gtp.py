@@ -248,6 +248,8 @@ def main(path, suffixes, destination): # main function, where everything is bein
     
     # adding first line to the detailed_logs.txt file
     log_detail(saveto, f"Started processing directory: {path}\n")
+
+    checkout_dir_processed = checkout_dir(os.path.join(saveto, "Processed"))
     
     # main loop: (tqdm is for dynamic progress bar in terminal)
     for jsonpath in tqdm(jsons, desc="Files processed"):
@@ -267,7 +269,6 @@ def main(path, suffixes, destination): # main function, where everything is bein
         # log the search for the file pairs based on json data
 #        log_detail(saveto, f"Searching for file pairs based on \"title\" from JSON: {jsondata['title']}")
         exist, files_ = find_file(jsondata, files, suffixes)
-        checkout_dir_processed = checkout_dir(os.path.join(saveto, "Processed"))
         for file in files_:
             if exist:
                 # copy and modify file, if found
@@ -336,8 +337,8 @@ def wizard(): # wizard mode, if user have not given the argument before running
         pass
     
 def parse(description): # start point of the program, where variable "path" is being created
-#    suffixes = ["", "-edited"] # text google can add to the name of the file and without making separate json
-    suffixes = ["", "-edited", "-redaguota", "-отредактировано"] # text google can add to the name of the file and without making separate json
+    suffixes = ["", "-edited"] # text google can add to the name of the file and without making separate json
+#    suffixes = ["", "-edited", "-redaguota", "-отредактировано"] # text google can add to the name of the file and without making separate json
     # this means that file cat.png and cat-edited.png have only one json - cat.png.supplemental-metadata.json
     
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
