@@ -152,10 +152,11 @@ def copy_modify(file, date, copyto): # copy and change creation and modification
 
 def copy_unprocessed(unprocessed, saveto): # copy all files that were not returned during json-based search
     to_return = []
+    checkout_dir_unprocessed = checkout_dir(os.path.join(saveto, "Unprocessed"))
     for file in tqdm(unprocessed, desc="Copying"):
         # log the copying of unprocessed files
         log_detail(saveto, f"Copying unprocessed file: {file['filepath']}")
-        new_file = get_unique_path(os.path.join(saveto, checkout_dir(os.path.join(saveto, "Unprocessed")), file["filename"]))
+        new_file = get_unique_path(os.path.join(saveto, checkout_dir_unprocessed, file["filename"]))
         shutil.copy(file["filepath"], new_file)
         # log the successful copying of the unprocessed file
         log_detail(saveto, f"Successfully copied unprocessed file to: {new_file}\n")
