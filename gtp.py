@@ -70,9 +70,10 @@ def get_file_names(path): # get all files from all folders inside directory give
                 files.append({
                     "filename":  file,
                     "filepath":  os.path.join(dir_cont[0], file),
-                    "albumname": get_album_name(os.path.join(dir_cont[0], file))
+                    "albumname": get_album_name(os.path.join(dir_cont[0], file)),
+                    "album_filename": os.path.join(get_album_name(os.path.join(dir_cont[0], file)), file)
                 })
-    return jsons, files
+    return jsons, sorted(files, key=lambda x: x["filepath"]) # sort files by name, to make search faster
 
 def unpack_json(path, savelogsto): # get what needed from single json file.
     # Log the processing of the JSON file
@@ -113,6 +114,7 @@ def get_album_name(filepath): # get name of the folder the file is in
 
 def find_file(jsondata, files, suffixes): # get full path to the file, based on it's name, which was extracted from json.
     # logic is to make dictionary with sufficient data to create file name to search for, using gener_names function.
+#    print(f"Searching for file pairs based on \"title\" from JSON: {jsondata['title']}, {len(files)} files to check, {len(jsondata['title'])} jsons to check")
     name, ext = os.path.splitext(jsondata["title"])
     filename = {
         "name": name,
@@ -129,10 +131,10 @@ def find_file(jsondata, files, suffixes): # get full path to the file, based on 
             
     album_name = get_album_name(jsondata["filepath"]) # get name of the folder the json was in from the path, to search for the file in the folder with the same name
     gener_name = gener_names(filename, suffixes, album_name)
-    
     # actual search, code just looks for same filenames, based on json's data and suffixes.
-    filepath = [file for file in files if os.path.join(file["albumname"], file["filename"]) in gener_name] 
-    
+#    print(len(files))
+    filepath = [file for file in files if file["album_filename"] in gener_name] 
+#    print(filepath)    
     if filepath:
         return True, filepath
     else:
@@ -246,7 +248,7 @@ def main(path, suffixes, destination): # main function, where everything is bein
     
     # get lists with json files and non-json files
     jsons, files = get_file_names(path)
-    
+#    print(f"Found {len(jsons)} json files and {len(files)} non-json files in the directory.")
     # adding first line to the detailed_logs.txt file
     log_detail(saveto, f"Started processing directory: {path}\n")
 
