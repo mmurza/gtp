@@ -140,7 +140,7 @@ def find_file(jsondata, files, suffixes): # get full path to the file, based on 
 
 def copy_modify(file, date, copyto): # copy and change creation and modification date of the file
     
-    copyto = checkout_dir(os.path.join(copyto, file["albumname"])) # create directory for the copied file, if it does not exist
+#    copyto = checkout_dir(os.path.join(copyto, file["albumname"])) # create directory for the copied file, if it does not exist
     
     new_file = get_unique_path(os.path.join(copyto, file["filename"])) # get unique path to the new file, to not overwrite existing files
     
@@ -273,7 +273,10 @@ def main(path, suffixes, destination): # main function, where everything is bein
                 # copy and modify file, if found
                 # log the copying and modification of the file
 #                log_detail(saveto, f"Copying and modifying file: {file['filepath']}")
-                procpath = copy_modify(file, jsondata["date"], checkout_dir_processed)
+                copyto = os.path.join(checkout_dir_processed, file["albumname"])
+                if copyto not in folders
+                    folders.append(checkout_dir(copyto)) # create directory for the copied file, if it does not exist
+                procpath = copy_modify(file, jsondata["date"], copyto)
                 # save path to modified file
                 file["procpath"] = procpath
                 file["jsonpath"] = jsonpath
