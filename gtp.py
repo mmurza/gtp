@@ -274,7 +274,7 @@ def main(path, suffixes, destination): # main function, where everything is bein
                 # log the copying and modification of the file
 #                log_detail(saveto, f"Copying and modifying file: {file['filepath']}")
                 copyto = os.path.join(checkout_dir_processed, file["albumname"])
-                if copyto not in folders
+                if copyto not in folders:
                     folders.append(checkout_dir(copyto)) # create directory for the copied file, if it does not exist
                 procpath = copy_modify(file, jsondata["date"], copyto)
                 # save path to modified file
