@@ -156,7 +156,7 @@ def copy_unprocessed(unprocessed, saveto): # copy all files that were not return
     for file in tqdm(unprocessed, desc="Copying"):
         # log the copying of unprocessed files
         log_detail(saveto, f"Copying unprocessed file: {file['filepath']}")
-        new_file = get_unique_path(os.path.join(saveto, checkout_dir_unprocessed, file["filename"]))
+        new_file = get_unique_path(os.path.join(checkout_dir_unprocessed, file["filename"]))
         shutil.copy(file["filepath"], new_file)
         # log the successful copying of the unprocessed file
         log_detail(saveto, f"Successfully copied unprocessed file to: {new_file}\n")
