@@ -342,6 +342,8 @@ def parse(description): # start point of the program, where variable "path" is b
 #    suffixes.append("-отредактировано") # text google can add to the name of the file and without making separate json
     # this means that file cat.png and cat-edited.png have only one json - cat.png.supplemental-metadata.json
     print("Suffixes that will be used to search for files, based on json data:")
+    for suffix in suffixes:
+        print(f"  {suffix}")
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
     
     parser.add_argument("-p", "--path", help="The full path to the repository containing Takeout folders", type=str, default=None)
