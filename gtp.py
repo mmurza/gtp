@@ -77,7 +77,7 @@ def get_file_names(path): # get all files from all folders inside directory give
 
 def unpack_json(path, savelogsto): # get what needed from single json file.
     # Log the processing of the JSON file
-#    log_detail(savelogsto, f"Processing JSON file: {path}")
+    log_detail(savelogsto, f"Processing JSON file: {path}")
     if exists(path):
         try:
             # Open the JSON file and load its content
@@ -92,7 +92,7 @@ def unpack_json(path, savelogsto): # get what needed from single json file.
                 log_detail(savelogsto, f"Invalid JSON structure in file, skipping: {path}")
                 return None
             # Extract the required information
-#            log_detail(savelogsto, f"Extracting data from JSON file: {path}")
+            log_detail(savelogsto, f"Extracting data from JSON file: {path}")
             return {"filepath": path,
                     "title": content["title"],
                     "date": datetime.fromtimestamp(int(content["photoTakenTime"]["timestamp"]))}
@@ -114,7 +114,6 @@ def get_album_name(filepath): # get name of the folder the file is in
 
 def find_file(jsondata, files, suffixes): # get full path to the file, based on it's name, which was extracted from json.
     # logic is to make dictionary with sufficient data to create file name to search for, using gener_names function.
-#    print(f"Searching for file pairs based on \"title\" from JSON: {jsondata['title']}, {len(files)} files to check, {len(jsondata['title'])} jsons to check")
     name, ext = os.path.splitext(jsondata["title"])
     filename = {
         "name": name,
@@ -132,9 +131,7 @@ def find_file(jsondata, files, suffixes): # get full path to the file, based on 
     album_name = get_album_name(jsondata["filepath"]) # get name of the folder the json was in from the path, to search for the file in the folder with the same name
     gener_name = gener_names(filename, suffixes, album_name)
     # actual search, code just looks for same filenames, based on json's data and suffixes.
-#    print(len(files))
     filepath = [file for file in files if file["album_filename"] in gener_name] 
-#    print(filepath)    
     if filepath:
         return True, filepath
     else:
@@ -248,7 +245,6 @@ def main(path, suffixes, destination): # main function, where everything is bein
     
     # get lists with json files and non-json files
     jsons, files = get_file_names(path)
-#    print(f"Found {len(jsons)} json files and {len(files)} non-json files in the directory.")
     # adding first line to the detailed_logs.txt file
     log_detail(saveto, f"Started processing directory: {path}\n")
 
@@ -265,18 +261,18 @@ def main(path, suffixes, destination): # main function, where everything is bein
                                       "title": "Title is missing",
                                       "time": time.strftime("%Y-%m-%d %H:%M:%S")})
             # log the scipping of the JSON file
-#            log_detail(saveto, f"Skipping JSON file in the main loop: {jsonpath}\n")
+            log_detail(saveto, f"Skipping JSON file in the main loop: {jsonpath}\n")
             continue # if json is empty, skip it
         
         # look for file pair based on json data
         # log the search for the file pairs based on json data
-#        log_detail(saveto, f"Searching for file pairs based on \"title\" from JSON: {jsondata['title']}")
+        log_detail(saveto, f"Searching for file pairs based on \"title\" from JSON: {jsondata['title']}")
         exist, files_ = find_file(jsondata, files, suffixes)
         for file in files_:
             if exist:
                 # copy and modify file, if found
                 # log the copying and modification of the file
-#                log_detail(saveto, f"Copying and modifying file: {file['filepath']}")
+                log_detail(saveto, f"Copying and modifying file: {file['filepath']}")
                 copyto = os.path.join(checkout_dir_processed, file["albumname"])
                 if copyto not in folders:
                     folders.append(checkout_dir(copyto)) # create directory for the copied file, if it does not exist
@@ -286,7 +282,7 @@ def main(path, suffixes, destination): # main function, where everything is bein
                 file["jsonpath"] = jsonpath
                 file["time"] = time.strftime("%Y-%m-%d %H:%M:%S")
                 # log the successful processing of the file
-#                log_detail(saveto, f"Successfully processed file: {file['filename']}\n")
+                log_detail(saveto, f"Successfully processed file: {file['filename']}\n")
                 processed.append(file)
             else:
                 # log the unprocessed JSON file
@@ -340,8 +336,8 @@ def wizard(): # wizard mode, if user have not given the argument before running
         pass
     
 def parse(description): # start point of the program, where variable "path" is being created
-    suffixes = ["", "-edited"] # text google can add to the name of the file and without making separate json
-#    suffixes = ["", "-edited", "-redaguota", "-отредактировано"] # text google can add to the name of the file and without making separate json
+#    suffixes = ["", "-edited"] # text google can add to the name of the file and without making separate json
+    suffixes = ["", "-edited", "-redaguota", "-отредактировано"] # text google can add to the name of the file and without making separate json
     # this means that file cat.png and cat-edited.png have only one json - cat.png.supplemental-metadata.json
     
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
@@ -357,7 +353,6 @@ def parse(description): # start point of the program, where variable "path" is b
     else: path = args.path
     
     suffixes = args.suffix
-#    print(suffixes)
     destination = args.destination
     
     main(path, suffixes, destination) # run main function with path, suffixes and destination
