@@ -222,6 +222,7 @@ def main(path, suffixes, destination): # main function, where everything is bein
     processed = []
     unprocessed = []
     unprocessed_jsons = []
+    folders = []
     
     # check if path provided exists:
     if not exists(path):
@@ -265,12 +266,13 @@ def main(path, suffixes, destination): # main function, where everything is bein
         # log the search for the file pairs based on json data
 #        log_detail(saveto, f"Searching for file pairs based on \"title\" from JSON: {jsondata['title']}")
         exist, files_ = find_file(jsondata, files, suffixes)
+        checkout_dir_processed = checkout_dir(os.path.join(saveto, "Processed"))
         for file in files_:
             if exist:
                 # copy and modify file, if found
                 # log the copying and modification of the file
 #                log_detail(saveto, f"Copying and modifying file: {file['filepath']}")
-                procpath = copy_modify(file, jsondata["date"], checkout_dir(os.path.join(saveto, "Processed")))
+                procpath = copy_modify(file, jsondata["date"], checkout_dir_processed)
                 # save path to modified file
                 file["procpath"] = procpath
                 file["jsonpath"] = jsonpath
