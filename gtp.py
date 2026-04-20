@@ -128,9 +128,10 @@ def find_file(jsondata, files, suffixes): # get full path to the file, based on 
             filename["brackets"] = brackets
             
     album_name = get_album_name(jsondata["filepath"]) # get name of the folder the json was in from the path, to search for the file in the folder with the same name
+    gener_name = gener_names(filename, suffixes, album_name)
     
     # actual search, code just looks for same filenames, based on json's data and suffixes.
-    filepath = [file for file in files if os.path.join(file["albumname"], file["filename"]) in gener_names(filename, suffixes, album_name)] 
+    filepath = [file for file in files if os.path.join(file["albumname"], file["filename"]) in gener_name] 
     
     if filepath:
         return True, filepath
